@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- PWA Support -->
+  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#2563eb">
   <meta name="mobile-web-app-capable" content="yes">
@@ -26,8 +26,8 @@
   <!-- Content -->
   <main class="flex-grow p-4">
     <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6 space-y-6">
-
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Inputs with Labels -->
         <div>
           <label class="block font-semibold text-gray-700 mb-1">🔌 Battery Voltage (V)</label>
           <input type="number" id="voltage" class="input" value="12" placeholder="e.g. 12">
@@ -70,15 +70,12 @@
         </div>
       </div>
 
-      <!-- Button -->
+      <!-- Calculate Button -->
       <div class="text-center">
         <button onclick="calculateBackup()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-6 py-3 rounded-full w-full shadow-md">
           🧮 Calculate Backup Time
         </button>
       </div>
-
-      <!-- Result Box -->
-      <div id="result" class="bg-green-50 border border-green-400 rounded-lg p-4 text-green-800 font-medium whitespace-pre-line text-sm sm:text-base hidden"></div>
     </div>
   </main>
 
@@ -87,7 +84,18 @@
     &copy; 2025 Battery Tools App – PWA Ready
   </footer>
 
-  <!-- Script -->
+  <!-- Result Modal -->
+  <div id="resultModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+    <div class="bg-white max-w-md w-full mx-4 p-6 rounded-xl shadow-xl">
+      <h2 class="text-xl font-bold text-blue-700 mb-3">📊 Backup Calculation</h2>
+      <pre id="resultText" class="text-sm text-gray-800 whitespace-pre-line mb-4"></pre>
+      <button onclick="closeModal()" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded-md w-full hover:bg-blue-700 transition">
+        ✖️ Close
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script>
     function calculateBackup() {
       const voltage = parseFloat(document.getElementById("voltage").value);
@@ -100,13 +108,6 @@
       const tempDerate = parseFloat(document.getElementById("tempDerate").value);
       const cableLoss = parseFloat(document.getElementById("cableLoss").value);
       const batteryHealth = parseFloat(document.getElementById("batteryHealth").value);
-      const output = document.getElementById("result");
-
-      if (!voltage || !capacity || !batteryCount || !loadWatt) {
-        output.classList.remove("hidden");
-        output.innerText = "⚠️ Please fill all required fields.";
-        return;
-      }
 
       const rawWh = voltage * capacity * batteryCount;
       const usableWh = rawWh *
@@ -121,16 +122,26 @@
       const h = Math.floor(hours);
       const m = Math.round((hours - h) * 60);
 
-      output.classList.remove("hidden");
-      output.innerText =
+      const resultText = document.getElementById("resultText");
+      resultText.innerText =
         `🔋 Total Battery Energy: ${rawWh} Wh\n` +
         `⚡ Usable Energy (adjusted): ${usableWh.toFixed(2)} Wh\n` +
         `⏱️ Estimated Backup Time: ${h} hour(s) ${m} minute(s)\n\n` +
         `📋 Factors Applied:\n` +
         `• DoD: ${dod}%\n• Inverter Eff: ${efficiency}%\n• Age Factor: ${ageFactor}%\n• Temp Derate: ${tempDerate}%\n• Cable Loss: ${cableLoss}%\n• Health: ${batteryHealth}%`;
+
+      document.getElementById("resultModal").classList.remove("hidden");
     }
 
-    // Apply Tailwind input styles dynamically
+    function closeModal() {
+      document.getElementById("resultModal").classList.add("hidden");
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeModal();
+    });
+
+    // Tailwind input style helper
     document.querySelectorAll('.input').forEach(input => {
       input.classList.add(
         'border', 'rounded-lg', 'p-3', 'w-full',
