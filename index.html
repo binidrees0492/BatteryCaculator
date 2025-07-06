@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#2563eb">
   <meta name="mobile-web-app-capable" content="yes">
@@ -14,141 +13,120 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="icon" href="icons/icon-192.png" type="image/png">
 </head>
-
 <body class="bg-gradient-to-br from-blue-100 to-teal-100 min-h-screen flex flex-col">
 
-  <!-- Header -->
-  <header class="bg-blue-700 text-white p-4 shadow-md sticky top-0 z-10">
-    <h1 class="text-xl font-bold text-center">🔋 Battery Inverter Backup Time</h1>
-    <p class="text-sm text-center text-blue-100">Accurate estimate based on real conditions</p>
-  </header>
+<header class="bg-blue-700 text-white p-4 shadow-md sticky top-0 z-10">
+  <h1 class="text-xl font-bold text-center">🔋 Battery Inverter Backup Time</h1>
+  <p class="text-sm text-center text-blue-100">Accurate estimate based on real conditions</p>
+</header>
 
-  <!-- Content -->
-  <main class="flex-grow p-4">
-    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6 space-y-6">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <!-- Inputs with Labels -->
-        <div>
-          <label class="block font-semibold text-gray-700 mb-1">🔌 Battery Voltage (V)</label>
-          <input type="number" id="voltage" class="input" value="12" placeholder="e.g. 12">
-        </div>
-        <div>
-          <label class="block font-semibold text-gray-700 mb-1">🔋 Battery Capacity (Ah)</label>
-          <input type="number" id="capacity" class="input" value="200" placeholder="e.g. 200">
-        </div>
-        <div>
-          <label class="block font-semibold text-gray-700 mb-1">🔢 Number of Batteries</label>
-          <input type="number" id="batteryCount" class="input" value="4" placeholder="e.g. 4">
-        </div>
-        <div>
-          <label class="block font-semibold text-gray-700 mb-1">💡 Load Power (Watts)</label>
-          <input type="number" id="loadWatt" class="input" value="1000" placeholder="e.g. 1000">
-        </div>
-        <div>
-          <label class="block font-semibold text-gray-700 mb-1">⚙️ Depth of Discharge (%)</label>
-          <input type="number" id="dod" class="input" value="70">
-        </div>
-        <div>
-          <label class="block font-semibold text-gray-700 mb-1">⚡ Inverter Efficiency (%)</label>
-          <input type="number" id="efficiency" class="input" value="90">
-        </div>
-        <div>
-          <label class="block font-semibold text-gray-700 mb-1">📉 Battery Age Factor (%)</label>
-          <input type="number" id="ageFactor" class="input" value="90">
-        </div>
-        <div>
-          <label class="block font-semibold text-gray-700 mb-1">🌡️ Temp Derating (%)</label>
-          <input type="number" id="tempDerate" class="input" value="95">
-        </div>
-        <div>
-          <label class="block font-semibold text-gray-700 mb-1">🔌 Cable Losses (%)</label>
-          <input type="number" id="cableLoss" class="input" value="98">
-        </div>
-        <div>
-          <label class="block font-semibold text-gray-700 mb-1">🧪 Battery Health (%)</label>
-          <input type="number" id="batteryHealth" class="input" value="100">
-        </div>
-      </div>
-
-      <!-- Calculate Button -->
-      <div class="text-center">
-        <button onclick="calculateBackup()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-6 py-3 rounded-full w-full shadow-md">
-          🧮 Calculate Backup Time
-        </button>
-      </div>
+<main class="flex-grow p-4">
+  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6 space-y-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div><label class="block font-semibold text-gray-700 mb-1">🔌 Battery Voltage (V)</label><input type="number" id="voltage" class="input" value="12"></div>
+      <div><label class="block font-semibold text-gray-700 mb-1">🔋 Battery Capacity (Ah)</label><input type="number" id="capacity" class="input" value="200"></div>
+      <div><label class="block font-semibold text-gray-700 mb-1">🔢 Number of Batteries</label><input type="number" id="batteryCount" class="input" value="4"></div>
+      <div><label class="block font-semibold text-gray-700 mb-1">💡 Load Power (Watts)</label><input type="number" id="loadWatt" class="input" value="1000"></div>
+      <div><label class="block font-semibold text-gray-700 mb-1">⚙️ Depth of Discharge (%)</label><input type="number" id="dod" class="input" value="70"></div>
+      <div><label class="block font-semibold text-gray-700 mb-1">⚡ Inverter Efficiency (%)</label><input type="number" id="efficiency" class="input" value="90"></div>
+      <div><label class="block font-semibold text-gray-700 mb-1">📉 Battery Age Factor (%)</label><input type="number" id="ageFactor" class="input" value="90"></div>
+      <div><label class="block font-semibold text-gray-700 mb-1">🌡️ Temp Derating (%)</label><input type="number" id="tempDerate" class="input" value="95"></div>
+      <div><label class="block font-semibold text-gray-700 mb-1">🔌 Cable Losses (%)</label><input type="number" id="cableLoss" class="input" value="98"></div>
+      <div><label class="block font-semibold text-gray-700 mb-1">🧪 Battery Health (%)</label><input type="number" id="batteryHealth" class="input" value="100"></div>
+      <div><label class="block font-semibold text-gray-700 mb-1">⚠️ Cut-off Voltage (V)</label><input type="number" id="cutoffVoltage" class="input" value="10.5"></div>
+      <div><label class="block font-semibold text-gray-700 mb-1">🔋 Max Discharge Current (A)</label><input type="number" id="maxDischargeAmps" class="input" value="150"></div>
     </div>
-  </main>
 
-  <!-- Footer -->
-  <footer class="text-center text-xs text-gray-500 p-3">
-    &copy; 2025 Battery Tools App – PWA Ready
-  </footer>
-
-  <!-- Result Modal -->
-  <div id="resultModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-    <div class="bg-white max-w-md w-full mx-4 p-6 rounded-xl shadow-xl">
-      <h2 class="text-xl font-bold text-blue-700 mb-3">📊 Backup Calculation</h2>
-      <pre id="resultText" class="text-sm text-gray-800 whitespace-pre-line mb-4"></pre>
-      <button onclick="closeModal()" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded-md w-full hover:bg-blue-700 transition">
-        ✖️ Close
-      </button>
+    <div class="text-center">
+      <button onclick="calculateBackup()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-6 py-3 rounded-full w-full shadow-md">🧮 Calculate Backup Time</button>
     </div>
   </div>
+</main>
 
-  <!-- Scripts -->
-  <script>
-    function calculateBackup() {
-      const voltage = parseFloat(document.getElementById("voltage").value);
-      const capacity = parseFloat(document.getElementById("capacity").value);
-      const batteryCount = parseFloat(document.getElementById("batteryCount").value);
-      const loadWatt = parseFloat(document.getElementById("loadWatt").value);
-      const dod = parseFloat(document.getElementById("dod").value);
-      const efficiency = parseFloat(document.getElementById("efficiency").value);
-      const ageFactor = parseFloat(document.getElementById("ageFactor").value);
-      const tempDerate = parseFloat(document.getElementById("tempDerate").value);
-      const cableLoss = parseFloat(document.getElementById("cableLoss").value);
-      const batteryHealth = parseFloat(document.getElementById("batteryHealth").value);
+<footer class="text-center text-xs text-gray-500 p-3">&copy; 2025 Battery Tools App – PWA Ready</footer>
 
-      const rawWh = voltage * capacity * batteryCount;
-      const usableWh = rawWh *
-        (dod / 100) *
-        (efficiency / 100) *
-        (ageFactor / 100) *
-        (tempDerate / 100) *
-        (cableLoss / 100) *
-        (batteryHealth / 100);
+<!-- Result Modal -->
+<div id="resultModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+  <div class="bg-white max-w-md w-full mx-4 p-6 rounded-xl shadow-xl">
+    <h2 class="text-xl font-bold text-blue-700 mb-3">📊 Backup Calculation</h2>
+    <pre id="resultText" class="text-sm text-gray-800 whitespace-pre-line mb-4"></pre>
+    <button onclick="closeModal()" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded-md w-full hover:bg-blue-700 transition">✖️ Close</button>
+  </div>
+</div>
 
-      const hours = usableWh / loadWatt;
-      const h = Math.floor(hours);
-      const m = Math.round((hours - h) * 60);
+<script>
+  function calculateBackup() {
+    const voltage = parseFloat(document.getElementById("voltage").value);
+    const capacity = parseFloat(document.getElementById("capacity").value);
+    const batteryCount = parseFloat(document.getElementById("batteryCount").value);
+    const loadWatt = parseFloat(document.getElementById("loadWatt").value);
+    const dod = parseFloat(document.getElementById("dod").value);
+    const efficiency = parseFloat(document.getElementById("efficiency").value);
+    const ageFactor = parseFloat(document.getElementById("ageFactor").value);
+    const tempDerate = parseFloat(document.getElementById("tempDerate").value);
+    const cableLoss = parseFloat(document.getElementById("cableLoss").value);
+    const batteryHealth = parseFloat(document.getElementById("batteryHealth").value);
+    const cutoffVoltage = parseFloat(document.getElementById("cutoffVoltage").value);
+    const maxDischargeAmps = parseFloat(document.getElementById("maxDischargeAmps").value);
 
-      const resultText = document.getElementById("resultText");
-      resultText.innerText =
-        `🔋 Total Battery Energy: ${rawWh} Wh\n` +
-        `⚡ Usable Energy (adjusted): ${usableWh.toFixed(2)} Wh\n` +
-        `⏱️ Estimated Backup Time: ${h} hour(s) ${m} minute(s)\n\n` +
-        `📋 Factors Applied:\n` +
-        `• DoD: ${dod}%\n• Inverter Eff: ${efficiency}%\n• Age Factor: ${ageFactor}%\n• Temp Derate: ${tempDerate}%\n• Cable Loss: ${cableLoss}%\n• Health: ${batteryHealth}%`;
+    const rawWh = voltage * capacity * batteryCount;
+    const usableWh = rawWh *
+      (dod / 100) *
+      (efficiency / 100) *
+      (ageFactor / 100) *
+      (tempDerate / 100) *
+      (cableLoss / 100) *
+      (batteryHealth / 100);
 
-      document.getElementById("resultModal").classList.remove("hidden");
+    const hours = usableWh / loadWatt;
+    const h = Math.floor(hours);
+    const m = Math.round((hours - h) * 60);
+    const dischargeCurrent = loadWatt / voltage;
+
+    const resultText = document.getElementById("resultText");
+    resultText.innerText =
+      `🔋 Total Battery Energy: ${rawWh} Wh
+` +
+      `⚡ Usable Energy (adjusted): ${usableWh.toFixed(2)} Wh
+` +
+      `⏱️ Estimated Backup Time: ${h} hour(s) ${m} minute(s)
+
+` +
+      `📋 Factors Applied:
+` +
+      `• Cut-off Voltage: ${cutoffVoltage}V
+` +
+      `• Max Discharge Current: ${maxDischargeAmps}A
+` +
+      `• Calculated Load Current: ${dischargeCurrent.toFixed(2)}A
+` +
+      `• DoD: ${dod}%
+• Inverter Eff: ${efficiency}%
+• Age Factor: ${ageFactor}%
+• Temp Derate: ${tempDerate}%
+• Cable Loss: ${cableLoss}%
+• Health: ${batteryHealth}%`;
+
+    if (dischargeCurrent > maxDischargeAmps) {
+      resultText.innerText += `
+
+⚠️ WARNING: Load current exceeds max discharge limit!`;
     }
 
-    function closeModal() {
-      document.getElementById("resultModal").classList.add("hidden");
-    }
+    document.getElementById("resultModal").classList.remove("hidden");
+  }
 
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeModal();
-    });
+  function closeModal() {
+    document.getElementById("resultModal").classList.add("hidden");
+  }
 
-    // Tailwind input style helper
-    document.querySelectorAll('.input').forEach(input => {
-      input.classList.add(
-        'border', 'rounded-lg', 'p-3', 'w-full',
-        'bg-gray-50', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-400',
-        'text-sm', 'text-gray-800'
-      );
-    });
-  </script>
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeModal();
+  });
+
+  document.querySelectorAll('.input').forEach(input => {
+    input.classList.add('border', 'rounded-lg', 'p-3', 'w-full', 'bg-gray-50', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-400', 'text-sm', 'text-gray-800');
+  });
+</script>
 </body>
 </html>

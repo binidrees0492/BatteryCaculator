@@ -1,8 +1,7 @@
 {
   "name": "Battery Backup Calculator",
-  "short_name": "AXHAN - BatteryCalc",
-  "description": "Battery-only inverter runtime calculator for tubular batteries",
-  "start_url": "./index.html",
+  "short_name": "BatteryCalc",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
