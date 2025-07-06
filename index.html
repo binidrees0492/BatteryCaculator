@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Battery Backup Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Add these in the <head> -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2563eb"> <!-- Tailwind blue-600 -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+</head>
+<body class="bg-gradient-to-br from-blue-100 to-white min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-10">
+    <h1 class="text-xl font-bold text-center">🔋 Battery-Only Inverter Backup</h1>
+    <p class="text-xs text-center opacity-80">Mobile-Friendly Calculator</p>
+  </header>
+
+  <!-- Content -->
+  <main class="flex-grow p-4">
+    <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-4 md:p-6 space-y-4">
+
+      <!-- Inputs Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <input type="number" id="voltage" placeholder="Battery Voltage (V)" class="input" value="12">
+        <input type="number" id="capacity" placeholder="Battery Capacity (Ah)" class="input" value="200">
+        <input type="number" id="batteryCount" placeholder="Number of Batteries" class="input" value="4">
+        <input type="number" id="loadWatt" placeholder="Load (Watts)" class="input" value="1000">
+        <input type="number" id="dod" placeholder="Depth of Discharge (%)" class="input" value="70">
+        <input type="number" id="efficiency" placeholder="Inverter Efficiency (%)" class="input" value="90">
+        <input type="number" id="ageFactor" placeholder="Battery Age Factor (%)" class="input" value="90">
+        <input type="number" id="tempDerate" placeholder="Temp Derating (%)" class="input" value="95">
+        <input type="number" id="cableLoss" placeholder="Cable Losses (%)" class="input" value="98">
+        <input type="number" id="batteryHealth" placeholder="Battery Health (%)" class="input" value="100">
+      </div>
+
+      <!-- Button -->
+      <div class="text-center">
+        <button onclick="calculateBackup()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg w-full shadow-lg transition">
+          🔍 Calculate Backup Time
+        </button>
+      </div>
+
+      <!-- Output -->
+      <div id="result" class="bg-green-50 border border-green-300 rounded-lg p-4 text-green-800 font-medium whitespace-pre-line text-sm sm:text-base hidden"></div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-xs text-gray-500 p-2">
+    &copy; 2025 Battery Tools App
+  </footer>
+
+  <!-- Script -->
+  <script>
+    function calculateBackup() {
+      const voltage = parseFloat(document.getElementById("voltage").value);
+      const capacity = parseFloat(document.getElementById("capacity").value);
+      const batteryCount = parseFloat(document.getElementById("batteryCount").value);
+      const loadWatt = parseFloat(document.getElementById("loadWatt").value);
+      const dod = parseFloat(document.getElementById("dod").value);
+      const efficiency = parseFloat(document.getElementById("efficiency").value);
+      const ageFactor = parseFloat(document.getElementById("ageFactor").value);
+      const tempDerate = parseFloat(document.getElementById("tempDerate").value);
+      const cableLoss = parseFloat(document.getElementById("cableLoss").value);
+      const batteryHealth = parseFloat(document.getElementById("batteryHealth").value);
+
+      const output = document.getElementById("result");
+
+      if (!voltage || !capacity || !batteryCount || !loadWatt) {
+        output.classList.remove("hidden");
+        output.innerText = "⚠️ Please fill all required fields.";
+        return;
+      }
+
+      const rawWh = voltage * capacity * batteryCount;
+      const usableWh = rawWh *
+        (dod / 100) *
+        (efficiency / 100) *
+        (ageFactor / 100) *
+        (tempDerate / 100) *
+        (cableLoss / 100) *
+        (batteryHealth / 100);
+
+      const hours = usableWh / loadWatt;
+      const h = Math.floor(hours);
+      const m = Math.round((hours - h) * 60);
+
+      output.classList.remove("hidden");
+      output.innerText =
+        `🔋 Total Battery Energy: ${rawWh} Wh\n` +
+        `⚡ Usable Energy (adjusted): ${usableWh.toFixed(2)} Wh\n` +
+        `⏱️ Estimated Backup Time: ${h} hour(s) ${m} minute(s)\n\n` +
+        `📋 Factors Applied:\n` +
+        `• DoD: ${dod}%\n• Inverter Eff: ${efficiency}%\n• Age Factor: ${ageFactor}%\n• Temp Derate: ${tempDerate}%\n• Cable Loss: ${cableLoss}%\n• Health: ${batteryHealth}%`;
+    }
+
+    // Tailwind-friendly class shorthand
+    document.querySelectorAll('.input').forEach(input => {
+      input.classList.add('border', 'rounded', 'p-3', 'w-full', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-400');
+    });
+  </script>
+</body>
+</html>
