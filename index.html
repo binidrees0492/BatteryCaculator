@@ -1,3 +1,4 @@
+<!-- Paste this in your index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,50 +7,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#2563eb">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="icon" href="icons/icon-192.png" type="image/png" />
 </head>
 <body class="bg-gradient-to-br from-blue-100 to-teal-100 min-h-screen flex flex-col">
 
 <header class="bg-blue-700 text-white p-4 shadow-md sticky top-0 z-10">
-  <h1 class="text-xl font-bold text-center">🔋 Battery Inverter Backup Time</h1>
-  <p class="text-sm text-center text-blue-100">Accurate estimate based on real conditions</p>
+  <h1 class="text-xl font-bold text-center">🔋 Battery Backup Calculator</h1>
+  <p class="text-sm text-center text-blue-100">Results will depend on input parameters and are estimatd.</p>
 </header>
 
-<main class="flex-grow p-4">
-  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6 space-y-6">
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-      <div><label class="block font-semibold text-gray-700 mb-1">🔌 Battery Voltage (V)</label><input type="number" id="voltage" class="input" value="12"></div>
-      <div><label class="block font-semibold text-gray-700 mb-1">🔋 Battery Capacity (Ah)</label><input type="number" id="capacity" class="input" value="290"></div>
-      <div><label class="block font-semibold text-gray-700 mb-1">🔢 Number of Batteries</label><input type="number" id="batteryCount" class="input" value="2"></div>
-      <div><label class="block font-semibold text-gray-700 mb-1">💡 Load Power (Watts)</label><input type="number" id="loadWatt" class="input" value="1000"></div>
-      <div><label class="block font-semibold text-gray-700 mb-1">⚙️ Depth of Discharge (%)</label><input type="number" id="dod" class="input" value="70"></div>
-      <div><label class="block font-semibold text-gray-700 mb-1">⚡ Inverter Efficiency (%)</label><input type="number" id="efficiency" class="input" value="90"></div>
-      <div><label class="block font-semibold text-gray-700 mb-1">📉 Battery Age Factor (%)</label><input type="number" id="ageFactor" class="input" value="90"></div>
-      <div><label class="block font-semibold text-gray-700 mb-1">🌡️ Temp Derating (%)</label><input type="number" id="tempDerate" class="input" value="95"></div>
-      <div><label class="block font-semibold text-gray-700 mb-1">🔌 Cable Losses (%)</label><input type="number" id="cableLoss" class="input" value="98"></div>
-      <div><label class="block font-semibold text-gray-700 mb-1">🧪 Battery Health (%)</label><input type="number" id="batteryHealth" class="input" value="100"></div>
-      <div><label class="block font-semibold text-gray-700 mb-1">⚠️ Cut-off Voltage (V)</label><input type="number" id="cutoffVoltage" class="input" value="10.5"></div>
-      <div><label class="block font-semibold text-gray-700 mb-1">🔋 Max Discharge Current (A)</label><input type="number" id="maxDischargeAmps" class="input" value="150"></div>
+<main class="flex-grow p-4" style="font-family: 'Arial', sans-serif;">
+  <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 space-y-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
+      <!-- Input Field Template -->
+      <div class="flex items-center gap-2">
+        <label for="voltage" class="w-60 font-medium text-sm text-gray-700">🔌 Voltage (V)</label>
+        <input id="voltage" type="number" value="12" class="input">
+      </div>
+      <div class="flex items-center gap-2">
+        <label for="capacity" class="w-60 font-medium text-sm text-gray-700">🔋 Capacity (Ah)</label>
+        <input id="capacity" type="number" value="290" class="input">
+      </div>
+      <div class="flex items-center gap-2">
+        <label for="batteryCount" class="w-60 font-medium text-sm text-gray-700">🔢 Batteries</label>
+        <input id="batteryCount" type="number" value="2" class="input">
+      </div>
+      <div class="flex items-center gap-2">
+        <label for="cutoffVoltage" class="w-60 font-medium text-sm text-gray-700">⚠️ Cut-off (V)</label>
+        <input id="cutoffVoltage" type="number" value="10.5" class="input">
+      </div>
+      <div class="flex items-center gap-2">
+        <label for="loadWatt" class="w-60 font-medium text-sm text-gray-700">💡 Load (W)</label>
+        <input id="loadWatt" type="number" value="1000" class="input">
+      </div>
+      <div class="flex items-center gap-2 hidden">
+        <label for="dod" class="w-60 font-medium text-sm text-gray-700">⚙️ DoD (%)</label>
+        <input id="dod" type="number" value="70" class="input">
+      </div>
+      <div class="flex items-center gap-2 hidden">
+        <label for="efficiency" class="w-60 font-medium text-sm text-gray-700">⚡ Eff. (%)</label>
+        <input id="efficiency" type="number" value="90" class="input">
+      </div>
+      <div class="flex items-center gap-2 hidden">
+        <label for="ageFactor" class="w-60 font-medium text-sm text-gray-700">📉 Age Factor (%)</label>
+        <input id="ageFactor" type="number" value="90" class="input">
+      </div>
+      <div class="flex items-center gap-2 hidden">
+        <label for="tempDerate" class="w-60 font-medium text-sm text-gray-700">🌡️ Temp Derate (%)</label>
+        <input id="tempDerate" type="number" value="95" class="input">
+      </div>
+      <div class="flex items-center gap-2 hidden">
+        <label for="cableLoss" class="w-60 font-medium text-sm text-gray-700">🔌 Cable Loss (%)</label>
+        <input id="cableLoss" type="number" value="98" class="input">
+      </div>
+      <div class="flex items-center gap-2">
+        <label for="batteryHealth" class="w-60 font-medium text-sm text-gray-700">🧪 Health (%)</label>
+        <input id="batteryHealth" type="number" value="100" class="input">
+      </div>
+
+      <div class="flex items-center gap-2 hidden">
+        <label for="maxDischargeAmps" class="w-60 font-medium text-sm text-gray-700">🔋 Max Amps (A)</label>
+        <input id="maxDischargeAmps" type="number" value="150" class="input">
+      </div>
     </div>
 
-    <div class="text-center">
-      <button onclick="calculateBackup()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-6 py-3 rounded-full w-full shadow-md">🧮 Calculate Backup Time</button>
+    <div class="text-center pt-2">
+      <button onclick="calculateBackup()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-6 py-3 rounded-full w-full shadow-md">
+        🧮 Calculate Backup Time
+      </button>
     </div>
   </div>
 </main>
 
-<footer class="text-center text-xs text-gray-500 p-3">&copy; 2025 Battery Tools App – PWA Ready</footer>
+<footer class="text-center text-xs text-gray-500 p-3">
+  &copy; 2025 <b class="text-red-600"><a href="https://www.upwork.com/freelancers/~0116016922bcbaf586">AXHAN IT Globe</a></b> Battery Backup Calculator
+</footer>
 
 <!-- Result Modal -->
 <div id="resultModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
   <div class="bg-white max-w-md w-full mx-4 p-6 rounded-xl shadow-xl">
-    <h2 class="text-xl font-bold text-blue-700 mb-3">📊 Backup Calculation</h2>
+    <h2 class="text-xl font-bold text-blue-700 mb-3">📊 Estimated Backup</h2>
     <pre id="resultText" class="text-sm text-gray-800 whitespace-pre-line mb-4"></pre>
-    <button onclick="closeModal()" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded-md w-full hover:bg-blue-700 transition">✖️ Close</button>
+    <button onclick="closeModal()" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded-md w-full hover:bg-blue-700 transition">
+      ✖️ Close
+    </button>
   </div>
 </div>
 
@@ -70,12 +116,12 @@
 
     const rawWh = voltage * capacity * batteryCount;
     const usableWh = rawWh *
-      (dod / 100) *
-      (efficiency / 100) *
-      (ageFactor / 100) *
-      (tempDerate / 100) *
-      (cableLoss / 100) *
-      (batteryHealth / 100);
+            (dod / 100) *
+            (efficiency / 100) *
+            (ageFactor / 100) *
+            (tempDerate / 100) *
+            (cableLoss / 100) *
+            (batteryHealth / 100);
 
     const hours = usableWh / loadWatt;
     const h = Math.floor(hours);
@@ -83,33 +129,42 @@
     const dischargeCurrent = loadWatt / voltage;
 
     const resultText = document.getElementById("resultText");
-    resultText.innerText =
-      `🔋 Total Battery Energy: ${rawWh} Wh
-` +
-      `⚡ Usable Energy (adjusted): ${usableWh.toFixed(2)} Wh
-` +
-      `⏱️ Estimated Backup Time: ${h} hour(s) ${m} minute(s)
+    resultText.innerHTML =
 
-` +
-      `📋 Factors Applied:
-` +
-      `• Cut-off Voltage: ${cutoffVoltage}V
-` +
-      `• Max Discharge Current: ${maxDischargeAmps}A
-` +
-      `• Calculated Load Current: ${dischargeCurrent.toFixed(2)}A
-` +
-      `• DoD: ${dod}%
-• Inverter Eff: ${efficiency}%
-• Age Factor: ${ageFactor}%
-• Temp Derate: ${tempDerate}%
-• Cable Loss: ${cableLoss}%
-• Health: ${batteryHealth}%`;
+            `<table class="w-full text-left border-collapse rounded-lg shadow-md overflow-hidden bg-white dark:bg-gray-800">
+    <thead>
+        <tr class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+            <th class="py-3 px-4 font-semibold text-sm uppercase tracking-wider"></th>
+            <th class="py-3 px-4 font-semibold text-sm uppercase tracking-wider">Factor</th>
+            <th class="py-3 px-4 font-semibold text-sm uppercase tracking-wider">Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+            <td class="py-3 px-4 text-gray-800 dark:text-gray-200">🔋</td>
+            <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Total Battery Energy:</td>
+            <td class="py-3 px-4 text-gray-900 dark:text-gray-100 font-medium">${rawWh} Wh</td>
+        </tr>
+        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+            <td class="py-3 px-4 text-gray-800 dark:text-gray-200">⚡</td>
+            <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Usable Energy (Adjusted):</td>
+            <td class="py-3 px-4 text-gray-900 dark:text-gray-100 font-medium">${usableWh.toFixed(2)} Wh</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+            <td class="py-3 px-4 text-gray-800 dark:text-gray-200">⏱️</td>
+            <td class="py-3 px-4 text-gray-700 dark:text-gray-300">Estimated Backup Time:</td>
+            <td class="py-3 px-4 text-gray-900 dark:text-gray-100 font-medium">${h}:${m}</td>
+        </tr>
+    </tbody>
+</table>`
+            // `📋 Factors Applied:\n` +
+            // `• Cut-off Voltage: ${cutoffVoltage}V\n` +
+            // `• Max Discharge Current: ${maxDischargeAmps}A\n` +
+            // `• Calculated Load Current: ${dischargeCurrent.toFixed(2)}A\n` +
+            // `• DoD: ${dod}%\n• Inverter Eff: ${efficiency}%\n• Age Factor: ${ageFactor}%\n• Temp Derate: ${tempDerate}%\n• Cable Loss: ${cableLoss}%\n• Health: ${batteryHealth}%`;
 
     if (dischargeCurrent > maxDischargeAmps) {
-      resultText.innerText += `
-
-⚠️ WARNING: Load current exceeds max discharge limit!`;
+      resultText.innerText += `\n\n⚠️ WARNING: Load current exceeds max discharge limit!`;
     }
 
     document.getElementById("resultModal").classList.remove("hidden");
@@ -124,7 +179,7 @@
   });
 
   document.querySelectorAll('.input').forEach(input => {
-    input.classList.add('border', 'rounded-lg', 'p-3', 'w-full', 'bg-gray-50', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-400', 'text-sm', 'text-gray-800');
+    input.classList.add('border', 'rounded-md', 'p-2', 'w-full', 'bg-gray-100', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-400', 'text-sm', 'text-gray-700');
   });
 </script>
 </body>
